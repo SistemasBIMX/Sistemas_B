@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacén de Equipos</title>
+    <link rel="stylesheet" href="css/computo.css">
+    <link rel="icon" href="css/ico.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Almacén de Equipos</h1>
+        <div class="barra-superior">
+            <div class="grupo-filtros">
+                <select id="filtroTipo" onchange="filtrarTipo()" class="btn-menu">
+                    <option value="todo">Todos los equipos</option>
+                    <option value="compu">Computadoras</option>
+                    <option value="laptop">Laptops</option>
+                    <option value="impresora">Impresoras</option>
+                </select>
+            </div>
+            <div class="grupo-acciones">
+                <button class="btn-excel" onclick="exportarExcel()">
+                    Exportar Excel
+                </button>
+                <a href="menu.html" class="btn-menu">
+                    Regresar al Menú
+                </a>
+            </div>
+        </div>
+        <div class="buscador-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="buscador" placeholder="Buscar por usuario, equipo o serie"
+                onkeyup="buscarRegistros()">
+        </div>
+        <div class="tablaEquipos">
+            <table>
+                <thead id="encabezadoTabla"></thead>
+                <tbody id="tablaRegistros"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalEliminar" class="modal">
+        <div class="modal-contenido">
+            <h2>Eliminar Registro</h2>
+            <p> ¿Seguro que deseas eliminar este registro? </p>
+            <div class="modal-botones">
+                <button class="btn-cancelar" onclick="cerrarModal()">
+                    Cancelar
+                </button>
+                <button class="btn-aceptar" id="btnConfirmarEliminar">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="alertaGuardado" class="alerta exito"> <i class="fa-solid fa-circle-check"></i>
+        Cambios guardados correctamente
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="computo.js"></script>
+</body>
+</html>

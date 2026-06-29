@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Almacén de Equipos</title>
+<link rel="icon" href="css/ico.ico">
+<link rel="stylesheet" href="css/bodega.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Almacén de Equipos y Productos</h1>
+    <div class="barra-superior">
+        <div class="grupo-filtros">
+            <button class="btn-menu" onclick="mostrarSeccion('computadoras')">
+                Escritorio
+            </button>
+            <button class="btn-menu" onclick="mostrarSeccion('laptops')">
+                Laptops
+            </button>
+            <button class="btn-menu" onclick="mostrarSeccion('impresoras')">
+                Impresoras
+            </button>
+            <button class="btn-menu" onclick="mostrarSeccion('productos')">
+                Productos
+            </button>
+        </div>
+    <div class="grupo-acciones">
+            <button onclick="exportarExcel()"  class="btn-excel">
+                Exportar Excel
+            </button>
+            <a href="menu.html" class="btn-menu">
+                Regresar
+            </a>
+        </div>
+    </div>
+    <div class="buscador-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="buscador" placeholder="Buscar..." onkeyup="buscarRegistros()">
+    </div>
+
+    <!-- COMPUTADORAS -->
+    <div id="computadoras" class="seccion">
+        <div class="tabla-container">
+            <table id="tablaComputadoras">
+                <thead>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>USUARIO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>MARCA CPU</th>
+                        <th>MODELO CPU</th>
+                        <th>MARCA MONITOR</th>
+                        <th>MODELO MONITOR</th>
+                        <th>MARCA MOUSE</th>
+                        <th>MODELO MOUSE</th>
+                        <th>SERIE</th>
+                        <th>TIPO DISCO</th>
+                        <th>CAP. DISCO</th>
+                        <th>TIPO RAM</th>
+                        <th>CAP. RAM</th>
+                        <th>SLOTS</th>
+                        <th>VERSIÓN SO</th>
+                        <th>PROCESADOR</th>
+                        <th>FABRICANTE</th>
+                        <th>WIFI</th>
+                        <th>DUAL BAND</th>
+                        <th>MAC WIFI</th>
+                        <th>RJ45</th>
+                        <th>MAC ETHERNET</th>
+                        <th>BLUETOOTH</th>
+                        <th>LECTORA</th>
+                        <th>GRÁFICA</th>
+                        <th>MONITOR</th>
+                        <th>ADMIN</th>
+                        <th>ESTADO</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyComputadoras"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- LAPTOPS -->
+    <div id="laptops" class="seccion" style="display:none">
+        <div class="tabla-container">
+            <table id="tablaLaptops">
+                <thead>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>USUARIO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>SERIE</th>
+                        <th>TIPO DISCO</th>
+                        <th>CAP. DISCO</th>
+                        <th>TIPO RAM</th>
+                        <th>CAP. RAM</th>
+                        <th>RAM SOPORTADA</th>
+                        <th>SLOTS</th>
+                        <th>VERSIÓN SO</th>
+                        <th>PROCESADOR</th>
+                        <th>FABRICANTE</th>
+                        <th>WIFI</th>
+                        <th>DUAL BAND</th>
+                        <th>MAC WIFI</th>
+                        <th>RJ45</th>
+                        <th>MAC ETHERNET</th>
+                        <th>BLUETOOTH</th>
+                        <th>LECTORA</th>
+                        <th>GRÁFICA</th>
+                        <th>MONITOR</th>
+                        <th>ADMIN</th>
+                        <th>ESTADO</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyLaptops"></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- IMPRESORAS -->
+    <div id="impresoras" class="seccion" style="display:none">
+        <div class="tabla-container">
+            <table id="tablaImpresoras">
+                <thead>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>USUARIO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>SERIE</th>
+                        <th>TIPO IMPRESORA</th>
+                        <th>CONEXIÓN</th>
+                        <th>ESTADO</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyImpresoras"></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- PRODUCTOS -->
+    <div id="productos" class="seccion" style="display:none">
+        <div class="tabla-container">
+            <table id="tablaProductos">
+                <thead>
+                   <tr>
+                        <th>ITEM</th>
+                        <th>FECHA ENTRADA</th>
+                        <th>USUARIO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>FECHA DEVOLUCIÓN</th>
+                        <th>CONSUMIBLE</th>
+                        <th>PRODUCTO</th>
+                        <th>MODELO</th>
+                        <th>MARCA</th>
+                        <th>N° SERIE</th>
+                        <th>ESTADO</th>
+                        <th>CÓDIGO</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyProductos"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="alertaGuardado" class="alerta">
+    Registro actualizado correctamente
+</div>
+<script src="todo.js"></script>
+</body>
+</html>
